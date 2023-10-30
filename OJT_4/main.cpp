@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// ë¶€ëª¨ í´ë˜ìŠ¤
 class Operator {
 private:
     int num1;
@@ -15,51 +14,51 @@ protected:
     void setResult(double result) { this->result = result; }
     int getNum1() { return num1; }
     int getNum2() { return num2; }
-    virtual void calculate() = 0;  // ìˆœìˆ˜ ê°€ìƒí•¨ìˆ˜
+    virtual void calculate() = 0;
 
 public:
     void setNumber(int num1, int num2) { this->num1 = num1; this->num2 = num2; }
     double getResult() { calculate(); return result; }
 };
 
-class Add : public Operator{
+class Add : public Operator {
     // write
-    virtual void calculate(){
+    virtual void calculate() {
         setResult(getNum1() + getNum2());
     }
 };
 
-class Subtract : public Operator{
+class Subtract : public Operator {
     // write
-    virtual void calculate(){
+    virtual void calculate() {
         setResult(getNum1() - getNum2());
     }
 };
 
-class Multiply : public Operator{
+class Multiply : public Operator {
     // write
-    virtual void calculate(){
+    virtual void calculate() {
         setResult(getNum1() * getNum2());
     }
 };
 
-class Divide : public Operator{
+class Divide : public Operator {
     // write
-    virtual void calculate(){
-        // intë¥¼ doubleë¡œ í˜•ë³€í™˜
+    virtual void calculate() {
         setResult(static_cast<double>(getNum1()) / getNum2());
     }
 };
 
-// ì…ë ¥ëœ ì—°ì‚°ìê°€ +, -, *, /ì¸ ê²½ìš° trueë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+// ¿¬»êÀÚ°¡ +, -, *, /ÀÎÁö ÆÇ´ÜÇÏ´Â ÇÔ¼ö
 bool check_sign(char sign) {
+    // ÀÔ·ÂµÈ ¿¬»êÀÚ°¡ +, -, *, /ÀÎ °æ¿ì true¸¦ ¹İÈ¯
     return (sign == '+' || sign == '-' || sign == '*' || sign == '/');
 }
 
-// ì˜ëª»ëœ ì—°ì‚°ìë¥¼ ì…ë ¥í•˜ë©´ trueë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+// Àß¸øµÈ ¿¬»êÀÚ¸¦ ÀÔ·ÂÇÏ¸é true¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
 bool forbid_sign(const string& str) {
     string forbid_sign[] = {"++", "**", "//", "-+", "*+", "/+"};
-    // ë²”ìœ„ ê¸°ë°˜ for ë£¨í”„ë¡œ ë°°ì—´ì˜ ëª¨ë“  ìš”ì†Œë¥¼ ì¶œë ¥
+    // ¹üÀ§ ±â¹İ for ·çÇÁ·Î ¹è¿­ÀÇ ¸ğµç ¿ä¼Ò¸¦ Ãâ·Â
     for (const string& pattern : forbid_sign) {
         if (str.find(pattern) != string::npos) {
             return true;
@@ -68,8 +67,7 @@ bool forbid_sign(const string& str) {
     return false;
 }
 
-int main()
-{
+int main() {
     Add a;
     Subtract s;
     Multiply m;
@@ -80,26 +78,26 @@ int main()
     char sign;
 
     while (1) {
-        cout << "ìˆ˜ì‹ì„ ì…ë ¥í•˜ì„¸ìš”. (break ì…ë ¥ ì‹œ ì¢…ë£Œ)" << endl;
+        cout << "¼ö½ÄÀ» ÀÔ·ÂÇÏ¼¼¿ä. (break ÀÔ·Â ½Ã Á¾·á)" << endl;
         getline(cin, input_exp);
 
         // write
 
-        // break ì…ë ¥ ì‹œ ì¢…ë£Œ
+        // break ÀÔ·Â ½Ã Á¾·á
         if (input_exp == "break") {
             break;
         }
 
-        // #1 ì˜ˆì™¸ ì²˜ë¦¬ : ì²«ë²ˆì§¸ì™€ ë§ˆì§€ë§‰ ì—°ì‚°ìì— '+'ê°€ ì…ë ¥ëœ ê²½ìš°
+        // #1 ¿¹¿Ü Ã³¸® : Ã¹¹øÂ°¿Í ¸¶Áö¸· ¿¬»êÀÚ¿¡ '+'°¡ ÀÔ·ÂµÈ °æ¿ì
         if (input_exp[input_exp.length() - 1] == '+' || input_exp[0] == '+') {
-            cerr << "ì˜¤ë¥˜: ì˜¬ë°”ë¥´ê²Œ ì…ë ¥í–ˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.\n";
+            cerr << "¿À·ù: ¿Ã¹Ù¸£°Ô ÀÔ·ÂÇß´ÂÁö È®ÀÎÇÏ¼¼¿ä.\n";
             cout << "===============================" << '\n' << '\n';
             continue;
         }
 
-        // #2 ì˜ˆì™¸ ì²˜ë¦¬ : ì—°ì‚°ìë¥¼ ì˜ëª» ì‚¬ìš©í•´ì„œ ì“´ ê²½ìš°
+        // #2 ¿¹¿Ü Ã³¸® : ¿¬»êÀÚ¸¦ Àß¸ø »ç¿ëÇØ¼­ ¾´ °æ¿ì
         if (forbid_sign(input_exp)) {
-            cerr << "ì˜¤ë¥˜: ì˜ëª»ëœ ì—°ì‚°ìë¥¼ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤. ì˜¬ë°”ë¥´ê²Œ ì…ë ¥í•˜ì„¸ìš”." << endl;
+            cerr << "¿À·ù: Àß¸øµÈ ¿¬»êÀÚ¸¦ »ç¿ëÇß½À´Ï´Ù. ¿Ã¹Ù¸£°Ô ÀÔ·ÂÇÏ¼¼¿ä." << endl;
             cout << "===============================" << '\n' << '\n';
             continue;
         }
@@ -108,23 +106,23 @@ int main()
 
         if (iss >> num1 >> sign >> num2) {
 
-            // #3 ì˜ˆì™¸ ì²˜ë¦¬ : '+, -, *, /'ë¥¼ ì œì™¸í•œ ì—°ì‚°ìê°€ ì…ë ¥ëœ ê²½ìš°
+            // #3 ¿¹¿Ü Ã³¸® : '+, -, *, /'¸¦ Á¦¿ÜÇÑ ¿¬»êÀÚ°¡ ÀÔ·ÂµÈ °æ¿ì
             if (!check_sign(sign) || iss.rdbuf() -> in_avail() > 0) {
-                cerr << "ì˜¤ë¥˜: ì˜¬ë°”ë¥¸ ì—°ì‚°ìë¥¼ ì…ë ¥í–ˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.\n";
+                cerr << "¿À·ù: ¿Ã¹Ù¸¥ ¿¬»êÀÚ¸¦ ÀÔ·ÂÇß´ÂÁö È®ÀÎÇÏ¼¼¿ä.\n";
                 cout << "===============================" << '\n' << '\n';
                 continue;
             }
 
-            // #4 ì˜ˆì™¸ ì²˜ë¦¬ : 0ìœ¼ë¡œ ë‚˜ëˆ„ëŠ” ê²½ìš°
+            // #4 ¿¹¿Ü Ã³¸® : 0À¸·Î ³ª´©´Â °æ¿ì
             if (sign == '/' && num2 == 0) {
-                cerr << "ì˜¤ë¥˜: 0ìœ¼ë¡œ ë‚˜ëˆŒ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n";
+                cerr << "¿À·ù: 0À¸·Î ³ª´­ ¼ö ¾ø½À´Ï´Ù.\n";
                 cout << "===============================" << '\n' << '\n';
                 continue;
             }
 
-            Operator* op; // Operator í´ë˜ìŠ¤ì˜ í¬ì¸í„° ë³€ìˆ˜ opë¥¼ ì„ ì–¸
+            Operator* op; // Operator Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ º¯¼ö op¸¦ ¼±¾ğ
 
-            // ì…ë ¥ëœ ì—°ì‚°ìì— ë”°ë¼ í•´ë‹¹í•˜ëŠ” Operator ê°ì²´ë¥¼ ì„ íƒ
+            // ÀÔ·ÂµÈ ¿¬»êÀÚ¿¡ µû¶ó ÇØ´çÇÏ´Â Operator °´Ã¼¸¦ ¼±ÅÃ
             switch (sign) {
                 case '+':
                     op = &a;
@@ -139,14 +137,14 @@ int main()
                     op = &d;
                     break;
             }
-            // ì„ íƒëœ Operator ê°ì²´ì— í”¼ì—°ì‚°ìë¥¼ ì„¤ì •
+            // ¼±ÅÃµÈ Operator °´Ã¼¿¡ ÇÇ¿¬»êÀÚ¸¦ ¼³Á¤
             op -> setNumber(num1, num2);
             double result = op -> getResult();
 
-            cout << "[ ê²°ê³¼ ] : " << result << endl;
-        // ì…ë ¥ì´ ì˜¬ë°”ë¥´ì§€ ì•Šì€ ê²½ìš° ì˜¤ë¥˜ ë©”ì‹œì§€ ì¶œë ¥
+            cout << "[ °á°ú ] : " << result << endl;
+        // ÀÔ·ÂÀÌ ¿Ã¹Ù¸£Áö ¾ÊÀº °æ¿ì ¿À·ù ¸Ş½ÃÁö Ãâ·Â
         } else {
-            cerr << "ì˜¤ë¥˜: ìœ íš¨í•˜ì§€ ì•Šì€ ì…ë ¥ í˜•ì‹ì…ë‹ˆë‹¤." << endl;
+            cerr << "¿À·ù: À¯È¿ÇÏÁö ¾ÊÀº ÀÔ·Â Çü½ÄÀÔ´Ï´Ù." << endl;
             cout << "===============================" << '\n' << '\n';
         }
     }
