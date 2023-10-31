@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <iomanip>
+#include <climits>
 
 using namespace std;
 
@@ -38,7 +40,7 @@ class Subtract : public Operator {
 class Multiply : public Operator {
     // write
     virtual void calculate() {
-        setResult(getNum1() * getNum2());
+        setResult(static_cast<double>(getNum1()) * static_cast<double>(getNum2()));
     }
 };
 
@@ -55,16 +57,24 @@ bool check_sign(char sign) {
     return (sign == '+' || sign == '-' || sign == '*' || sign == '/');
 }
 
-// 잘못된 연산자를 입력하면 true를 반환하는 함수
-bool forbid_sign(const string& str) {
+// 잘못된 연산자를 입력하면 false를 반환하는 함수
+bool right_sign(const string& str) {
     string forbid_sign[] = {"++", "**", "//", "-+", "*+", "/+"};
     // 범위 기반 for 루프로 배열의 모든 요소를 출력
     for (const string& pattern : forbid_sign) {
         if (str.find(pattern) != string::npos) {
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
+}
+
+// 오버플로우가 발생하면 true를 반환하는 함수
+bool check_overflow(int num1, int num2) {
+    if ((num2 > 0 && num1 > INT_MAX - num2) || (num1 < 0 && num1 < INT_MIN + num2)) {
+        return true; // 오버플로우가 발생함
+    }
+    return false; // 오버플로우가 발생하지 않음
 }
 
 int main() {
@@ -96,7 +106,7 @@ int main() {
         }
 
         // #2 예외 처리 : 연산자를 잘못 사용해서 쓴 경우
-        if (forbid_sign(input_exp)) {
+        if (right_sign(input_exp) != 1) {
             cerr << "오류: 잘못된 연산자를 사용했습니다. 올바르게 입력하세요." << endl;
             cout << "===============================" << '\n' << '\n';
             continue;
@@ -116,6 +126,13 @@ int main() {
             // #4 예외 처리 : 0으로 나누는 경우
             if (sign == '/' && num2 == 0) {
                 cerr << "오류: 0으로 나눌 수 없습니다.\n";
+                cout << "===============================" << '\n' << '\n';
+                continue;
+            }
+
+            // #5 예외 처리: 정수 오버플로우가 발생하는 경우
+            if (check_overflow(num1, num2) != 0) {
+                cerr << "오류: 정수 오버플로우가 발생합니다.\n";
                 cout << "===============================" << '\n' << '\n';
                 continue;
             }
@@ -141,7 +158,14 @@ int main() {
             op -> setNumber(num1, num2);
             double result = op -> getResult();
 
-            cout << "[ 결과 ] : " << result << endl;
+            if (sign == '/') {
+                cout << fixed << setprecision(8) << "[ 결과 ] : " << result << endl;
+                cout << "===============================" << '\n' << '\n';
+                continue;
+            }
+                cout << fixed << setprecision(0) << "[ 결과 ] : " << result << endl;
+                cout << "===============================" << '\n' << '\n';
+
         // 입력이 올바르지 않은 경우 오류 메시지 출력
         } else {
             cerr << "오류: 유효하지 않은 입력 형식입니다." << endl;
