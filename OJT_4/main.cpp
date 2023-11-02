@@ -69,12 +69,12 @@ bool right_sign(const string& str) {
     return true;
 }
 
-// 오버플로우가 발생하면 true를 반환하는 함수
+// 오버플로우가 발생하면 false를 반환하는 함수
 bool check_overflow(int num1, int num2) {
     if ((num2 > 0 && num1 > INT_MAX - num2) || (num1 < 0 && num1 < INT_MIN + num2)) {
-        return true; // 오버플로우가 발생함
+        return false; // 오버플로우가 발생함
     }
-    return false; // 오버플로우가 발생하지 않음
+    return true; // 오버플로우가 발생하지 않음
 }
 
 int main() {
@@ -106,7 +106,7 @@ int main() {
         }
 
         // #2 예외 처리 : 연산자를 잘못 사용해서 쓴 경우
-        if (right_sign(input_exp) != 1) {
+        if (right_sign(input_exp) == false) {
             cerr << "오류: 잘못된 연산자를 사용했습니다. 올바르게 입력하세요." << endl;
             cout << "===============================" << '\n' << '\n';
             continue;
@@ -117,7 +117,7 @@ int main() {
         if (iss >> num1 >> sign >> num2) {
 
             // #3 예외 처리 : '+, -, *, /'를 제외한 연산자가 입력된 경우
-            if (!check_sign(sign) || iss.rdbuf() -> in_avail() > 0) {
+            if (check_sign(sign) == false || iss.rdbuf() -> in_avail() > 0) {
                 cerr << "오류: 올바른 연산자를 입력했는지 확인하세요.\n";
                 cout << "===============================" << '\n' << '\n';
                 continue;
@@ -131,7 +131,7 @@ int main() {
             }
 
             // #5 예외 처리: 정수 오버플로우가 발생하는 경우
-            if (check_overflow(num1, num2) != 0) {
+            if ((sign == '+' || sign == '-') && check_overflow(num1, num2) == false) {
                 cerr << "오류: 2147483647 ~ -2147483648 사이의 값을 입력하세요.\n";
                 cout << "===============================" << '\n' << '\n';
                 continue;
