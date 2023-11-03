@@ -26,14 +26,14 @@ public:
 class Add : public Operator {
     // write
     virtual void calculate() {
-        setResult(getNum1() + getNum2());
+        setResult(static_cast<double>(getNum1()) + getNum2());
     }
 };
 
 class Subtract : public Operator {
     // write
     virtual void calculate() {
-        setResult(getNum1() - getNum2());
+        setResult(static_cast<double>(getNum1()) - getNum2());
     }
 };
 
@@ -69,12 +69,9 @@ bool right_sign(const string& str) {
     return true;
 }
 
-// 오버플로우가 발생하면 false를 반환하는 함수
+// 입력값이 정수값을 넘어가면 false를 반환하는 함수
 bool check_overflow(int num1, int num2) {
-    if ((num2 > 0 && num1 > INT_MAX - num2) || (num1 < 0 && num1 < INT_MIN + num2)) {
-        return false; // 오버플로우가 발생함
-    }
-    return true; // 오버플로우가 발생하지 않음
+    return (num1 > INT_MAX || num1 < INT_MIN || num2 > INT_MAX || num2 < INT_MIN);
 }
 
 int main() {
@@ -130,13 +127,6 @@ int main() {
                 continue;
             }
 
-            // #5 예외 처리: 정수 오버플로우가 발생하는 경우
-            if ((sign == '+' || sign == '-') && check_overflow(num1, num2) == false) {
-                cerr << "오류: 2147483647 ~ -2147483648 사이의 값을 입력하세요.\n";
-                cout << "===============================" << '\n' << '\n';
-                continue;
-            }
-
             Operator* op; // Operator 클래스의 포인터 변수 op를 선언
 
             // 입력된 연산자에 따라 해당하는 Operator 객체를 선택
@@ -165,7 +155,10 @@ int main() {
             }
                 cout << fixed << setprecision(0) << "[ 결과 ] : " << result << endl;
                 cout << "===============================" << '\n' << '\n';
-
+        // #5 예외 처리 : 입력값이 정수값을 초과할 경우
+        } else if (check_overflow(num1, num2) == false) {
+                cerr << "오류: 2147483647 ~ -2147483648 사이의 값을 입력하세요.\n";
+                cout << "===============================" << '\n' << '\n';
         // 입력이 올바르지 않은 경우 오류 메시지 출력
         } else {
             cerr << "오류: 유효하지 않은 입력 형식입니다." << endl;
