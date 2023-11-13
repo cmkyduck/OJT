@@ -1,5 +1,5 @@
-import QtQuick
-import QtQuick.Window
+import QtQuick 2.10
+import QtQuick.Window 2.10
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
@@ -11,7 +11,7 @@ Window {
     title: "계산기"
 
     ColumnLayout {
-        id: column_Layout
+        id: column_layout
         anchors.fill: parent
         spacing: 5
 
@@ -29,7 +29,7 @@ Window {
         }
 
         GridLayout {
-            id: gridLayout
+            id: grid_layout
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: 360
@@ -42,7 +42,9 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "7"
-                onClicked: button_text.text += 7777777777777
+                font.pixelSize: 20
+                font.bold: true
+                onClicked: button_text.text += 7
             }
 
             Button {
@@ -50,6 +52,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "8"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 8
             }
 
@@ -58,6 +62,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "9"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 9
             }
 
@@ -66,6 +72,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "+"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += "+"
             }
 
@@ -74,6 +82,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "4"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 4
             }
 
@@ -82,6 +92,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "5"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 5
             }
 
@@ -90,6 +102,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "6"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 6
             }
 
@@ -98,6 +112,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "-"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += "-"
             }
 
@@ -106,6 +122,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "1"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 1
             }
 
@@ -114,6 +132,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "2"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 2
             }
 
@@ -122,6 +142,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "3"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 3
             }
 
@@ -130,18 +152,19 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "*"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += "*"
             }
 
-            Rectangle {
+            Button {
+                id: button_clear
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-
-                Button {
-                    anchors.fill: parent
-                    id: button_clear
-                    text: "clear"
-                }
+                text: "clear"
+                font.pixelSize: 20
+                font.bold: true
+                onClicked: button_text.text = ""
             }
 
             Button {
@@ -149,6 +172,8 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "0"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += 0
             }
 
@@ -157,15 +182,30 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "="
+                font.pixelSize: 20
+                font.bold: true
+                onClicked: {
+                    Calculator.input_string = button_text.text
+                    var result = Calculator.calculate();
+                    button_text.text = result;
+                }
             }
 
-                Button {
+            Button {
                 id: button_divide
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 text: "/"
+                font.pixelSize: 20
+                font.bold: true
                 onClicked: button_text.text += "/"
             }
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.9}
+}
+##^##*/
