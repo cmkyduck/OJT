@@ -14,6 +14,7 @@ private:
     int num1;
     int num2;
     double result;
+    double error = 1;
     QVariant input_string;
 
 protected:
@@ -25,10 +26,11 @@ public:
     Calculator();
     ~Calculator();
 
-    void setNumber(const int num1, const int num2) { this->num1 = num1; this->num2 = num2; }
+    void setNumber(int num1, int num2) { this->num1 = num1; this->num2 = num2; }
     double getResult() { return result; }
+    double getError() { return error; }
 
-    void setInput_string(const QVariant input_string) { this->input_string = input_string; emit input_stringChanged(); }
+    void setInput_string(QVariant input_string) { this->input_string = input_string; emit input_stringChanged(); }
     QVariant getInput_string() { return input_string; }
 
     void add();
@@ -40,6 +42,7 @@ public:
     signals:
         void input_stringChanged();
         void resultChanged();
+        void errorChanged();
 };
 
 #endif // CALCULATOR_H

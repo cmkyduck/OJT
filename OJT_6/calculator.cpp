@@ -19,7 +19,7 @@ double Calculator::calculate()
 
     // #1 예외 처리 : 첫번째와 마지막 입력값에 '+'가 입력된 경우
     if (input_exp[input_exp.length() - 1] == '+' || input_exp[0] == '+') {
-        return 0;
+        return getError();
     }
 
     // #2 예외 처리 : 잘못된 연산자들을 사용한 경우
@@ -27,7 +27,7 @@ double Calculator::calculate()
 
     for (const string& pattern : forbid_sign) {
         if (input_exp.find(pattern) != string::npos) {
-            return 0;
+            return getError();
         }
     }
 
@@ -36,17 +36,17 @@ double Calculator::calculate()
     if (iss >> num1 >> sign >> num2) {
         // #3 예외 처리 : '+, -, *, /'를 제외한 연산자가 입력된 경우
         if (sign != '+' && sign != '-' && sign != '*' && sign != '/') {
-            return 0;
+            return getError();
         }
 
         // #4 예외 처리 : 0으로 나누는 경우
         if (sign == '/' && num2 == 0) {
-            return 0;
+            return getError();
         }
 
         // #5 예외 처리 : 문자열을 처리했을때 남은 문자열이 남아있는 경우
         if (iss.rdbuf() -> in_avail() > 0) {
-            return 0;
+            return getError();
         }
 
         setNumber(num1, num2);
@@ -69,11 +69,11 @@ double Calculator::calculate()
 
     // #6 예외 처리 : 입력값이 정수값을 초과할 경우
     } else if (num1 > INT_MAX || num1 < INT_MIN || num2 > INT_MAX || num2 < INT_MIN) {
-        return 0;
+        return getError();
 
     // #7 예외 처리 : 입력이 올바르지 않는 경우
     } else {
-        return 0;
+        return getError();
     }
 }
 
