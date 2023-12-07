@@ -30,6 +30,7 @@ public:
     double getResult() { return result; }
     double getError() { return error; }
 
+    // qml 에서 text 가져오기 위한 함수
     void setInput_string(QVariant input_string) { this->input_string = input_string; emit input_stringChanged(); }
     QVariant getInput_string() { return input_string; }
 
@@ -42,7 +43,6 @@ public:
     signals:
         void input_stringChanged();
         void resultChanged();
-        void errorChanged();
 };
 
 #endif // CALCULATOR_H

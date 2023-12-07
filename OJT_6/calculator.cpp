@@ -44,7 +44,7 @@ double Calculator::calculate()
             return getError();
         }
 
-        // #5 예외 처리 : 문자열을 처리했을때 남은 문자열이 남아있는 경우
+        // #5 예외 처리 : 문자열을 처리했을 때 남은 문자열이 남아있는 경우
         if (iss.rdbuf() -> in_avail() > 0) {
             return getError();
         }
